@@ -3,7 +3,11 @@ package com.roam.sys.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * <p>
@@ -13,6 +17,9 @@ import java.io.Serializable;
  * @author GJJ
  * @since 2024-10-09
  */
+
+@Getter
+@Setter
 @TableName("user")
 public class User implements Serializable {
 
@@ -32,6 +39,24 @@ public class User implements Serializable {
     private Integer status;
 
     private String avatar;
+
+    private Date createdat;
+
+    private Date updatedat;
+
+    public Date getUpdatedat() {
+        return updatedat;
+    }
+
+    public void setUpdatedat( Date updatedat) {
+        this.updatedat = updatedat;
+    }
+    public Date getCreatedat() {
+        return createdat;
+    }
+    public void setCreatedat(Date createdat) {
+        this.createdat = createdat;
+    }
 
     public Integer getId() {
         return id;
@@ -93,6 +118,8 @@ public class User implements Serializable {
             ", phone=" + phone +
             ", status=" + status +
             ", avatar=" + avatar +
+            ", createdat=" + createdat +
+            ", updatedat=" + updatedat +
         "}";
     }
 }

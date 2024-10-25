@@ -1,15 +1,11 @@
 package com.roam.sys.service.impl;
 
 
-import com.roam.sys.entity.UserActivity;
-import com.roam.sys.mapper.UserActivityMapper;
-import com.roam.sys.service.IUserActivityService;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.roam.sys.entity.UserStats;
+import com.roam.sys.mapper.UserStatsMapper;
+import com.roam.sys.service.IUserStatsService;
 import org.springframework.stereotype.Service;
-
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * <p>
@@ -20,7 +16,7 @@ import java.util.Map;
  * @since 2024-10-09
  */
 @Service
-public class UserActivityServiceImpl extends ServiceImpl<UserActivityMapper, UserActivity> implements IUserActivityService {
+public class UserStatsServiceImpl extends ServiceImpl<UserStatsMapper, UserStats> implements IUserStatsService {
 
 
 

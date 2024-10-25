@@ -1,5 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.roam.sys.mapper.UserMapper">
+<!--  查询用户学习进展 只有2个值  -->
+    <select id="getUserDashBoardInfoByUserId" parameterType="Integer" resultType="com.roam.sys.model.UserDashBoard">
+        SELECT
+            userId,
+            COUNT(CASE WHEN topicStats = 'done' THEN 1 END) AS done,
+            COUNT(DISTINCT roadmapTitle) AS learning
+        FROM
+            user_stats
+        WHERE
+            userId = ${userId};
+    </select>
+<!-- 查询用户学习天数 只有1个值  -->
+    <select id="getUserStreakByUserId" parameterType="Integer" resultType="com.roam.sys.model.UserStreak">
+        SELECT
+            u.id AS userId,
+            u.createdAt AS firstLoginTime,
+            MAX(us.updatedAt) AS latestLearningTime,
+            TIMESTAMPDIFF(DAY, u.createdAt, MAX(us.updatedAt)) AS streak
+        FROM
+            user u
+                LEFT JOIN
+            user_stats us ON u.id = us.userId
+        WHERE
+            u.id = #{userId};
+    </select>
+
+<!--  查询用户总体路线图进展  用于路线图进度条 列表 -->
+    <select id="getUserRoadmapStatsByUserId" parameterType="Integer" resultType="com.roam.sys.model.UserRoadmapStats">
+        SELECT
+            us.roadmapTitle AS title,
+            us.roadmapId AS id,
+            COUNT(CASE WHEN us.topicStats = 'done' THEN 1 END) AS done,
+            COUNT(CASE WHEN us.topicStats = 'learning' THEN 1 END) AS learning,
+            COUNT(CASE WHEN us.topicStats = 'skipped' THEN 1 END) AS skipped,
+            ANY_VALUE(r.pointNum) AS total,
+            MAX(DATE(us.updatedAt)) AS updatedAt
+        FROM
+            user_stats AS us
+                JOIN
+            roadmap AS r ON us.roadmapId = r.resourceId
+        WHERE
+            us.userId = #{userID}
+        GROUP BY
+            us.roadmapTitle, us.roadmapId;
+    </select>
+
+<!--  查询用户活动行为  -->
+    <select id="getUserActivityByUserId" parameterType="Integer" resultType="com.roam.sys.model.UserActivityStream">
+        SELECT
+            ROW_NUMBER() OVER (ORDER BY MAX(DATE(createdAt)), resourceId, status) AS activityId,
+            MAX(resourceType) AS resourceType,
+            resourceId AS resourceId,
+            MAX(resourceTitle) AS resourceTitle,
+            status,
+--             GROUP_CONCAT(DISTINCT CONCAT("`", topicTitle, "`") SEPARATOR ", ") AS topics,
+            GROUP_CONCAT(DISTINCT topicTitle SEPARATOR ", ") AS topics,
+            MAX(DATE(createdAt)) AS updatedAt
+        FROM
+            user_activity
+        WHERE
+            userId = #{userId}
+        GROUP BY
+            resourceId, status, DATE(createdAt)
+        ORDER BY
+            updatedAt, resourceId, status;
+    </select>
 
 </mapper>
