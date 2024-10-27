@@ -9,8 +9,8 @@ import java.util.Date;
 
 @Getter
 @Setter
-@TableName("user_stats")
-public class UserStats implements Serializable {
+@TableName("user_favorite")
+public class UserFavorite implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -21,14 +21,6 @@ public class UserStats implements Serializable {
     private String resourceType;
 
     private String resourceId;
-
-    private String resourceTitle;
-
-    private String topicId;
-
-    private String topicTitle;
-
-    private String topicStats;
 
     private Date updatedAt;
 
@@ -60,34 +52,6 @@ public class UserStats implements Serializable {
         this.resourceId = resourceId;
     }
 
-    public String getResourceTitle() {
-        return resourceTitle;
-    }
-    public void setResourceTitle(String resourceTitle) {
-        this.resourceTitle = resourceTitle;
-    }
-
-    public String getTopicId() {
-        return topicId;
-    }
-    public void setTopicId(String topicId) {
-        this.topicId = topicId;
-    }
-
-    public String getTopicTitle() {
-        return topicTitle;
-    }
-    public void setTopicTitle(String topicTitle) {
-        this.topicTitle = topicTitle;
-    }
-
-    public String getTopicStats() {
-        return topicStats;
-    }
-    public void setTopicStats(String topicStats) {
-        this.topicStats = topicStats;
-    }
-
     public Date getUpdatedAt() {
         return updatedAt;
     }
@@ -98,15 +62,11 @@ public class UserStats implements Serializable {
 
     @Override
     public String toString() {
-        return "UserStats{" +
+        return "UserFavorite{" +
                 "userId=" + userId +
                 ", username=" + username +
                 ", resourceType=" + resourceType +
                 ", resourceId=" + resourceId +
-                ", resourceTitle=" + resourceTitle +
-                ", topicId=" + topicId +
-                ", topicTitle=" + topicTitle +
-                ", topicStats=" + topicStats +
                 ", updatedAt=" + updatedAt +
                 "}";
     }

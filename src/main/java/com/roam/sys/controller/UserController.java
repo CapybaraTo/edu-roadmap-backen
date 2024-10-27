@@ -39,19 +39,20 @@ public class UserController {
     }
 
 //    获取用户状态
-private String getCookieValue(HttpServletRequest request, String cookieName) {
-    Cookie[] cookies = request.getCookies();
-    if (cookies != null) {
-        for (Cookie cookie : cookies) {
-            if (cookieName.equals(cookie.getName())) {
-                return cookie.getValue();
+    private String getCookieValue(HttpServletRequest request, String cookieName) {
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookieName.equals(cookie.getName())) {
+                    return cookie.getValue();
+                }
             }
         }
+        return null;
     }
-    return null;
-}
     @GetMapping("/stats")
     public Map<String, Object> getUserStats(HttpServletRequest request){
+//    public Map<String, Object> getUserStats(String token){
         String token = getCookieValue(request,"__roadmapsh_jt__");
 //检查是否找到了token
         if (token == null) {

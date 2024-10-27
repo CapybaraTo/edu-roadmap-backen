@@ -19,7 +19,7 @@ import java.util.List;
  */
 public interface UserMapper extends BaseMapper<User> {
 
-//    public List<String> getUserStreakByUserId(Integer userId);
+//    public List<String> getUserStreakByUserId(String userId);
 
 //    获取路线图进度列表
     public List<UserRoadmapStats> getUserRoadmapStatsByUserId(Integer userId);

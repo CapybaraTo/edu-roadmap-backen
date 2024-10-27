@@ -17,7 +17,7 @@ public class UserDashBoard implements Serializable {
     private static final long serialVersionUID=1L;
 
     @ApiModelProperty(value = "用户ID")
-    private Integer userId;
+    private String userId;
 
     @ApiModelProperty(value = "知识点完成数")
     private Integer done;

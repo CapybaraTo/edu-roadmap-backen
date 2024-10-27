@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.roam.sys.mapper.UserMapper">
-<!--  查询用户学习进展 只有2个值  -->
+<!--  查询用户学习进展 只有2个值 完成的知识点数和正在学习的路线图数量  -->
     <select id="getUserDashBoardInfoByUserId" parameterType="Integer" resultType="com.roam.sys.model.UserDashBoard">
         SELECT
-            userId,
-            COUNT(CASE WHEN topicStats = 'done' THEN 1 END) AS done,
-            COUNT(DISTINCT roadmapTitle) AS learning
+            user_id,
+            COUNT(CASE WHEN resource_type = 'roadmap' AND topic_stats = 'done' THEN 1 END) AS done,
+            COUNT(DISTINCT CASE WHEN resource_type = 'roadmap' AND topic_stats = 'learning' THEN resource_title END) AS learning
         FROM
             user_stats
         WHERE
-            userId = ${userId};
+            user_id = ${userId};
     </select>
 <!-- 查询用户学习天数 只有1个值  -->
     <select id="getUserStreakByUserId" parameterType="Integer" resultType="com.roam.sys.model.UserStreak">
         SELECT
             u.id AS userId,
-            u.createdAt AS firstLoginTime,
-            MAX(us.updatedAt) AS latestLearningTime,
-            TIMESTAMPDIFF(DAY, u.createdAt, MAX(us.updatedAt)) AS streak
+            u.created_at AS firstLoginTime,
+            MAX(us.updated_at) AS latestLearningTime,
+            TIMESTAMPDIFF(DAY, u.created_at, MAX(us.updated_at)) AS streak
         FROM
             user u
                 LEFT JOIN
-            user_stats us ON u.id = us.userId
+            user_stats us ON u.id = us.user_id
         WHERE
             u.id = #{userId};
     </select>
@@ -30,40 +30,39 @@
 <!--  查询用户总体路线图进展  用于路线图进度条 列表 -->
     <select id="getUserRoadmapStatsByUserId" parameterType="Integer" resultType="com.roam.sys.model.UserRoadmapStats">
         SELECT
-            us.roadmapTitle AS title,
-            us.roadmapId AS id,
-            COUNT(CASE WHEN us.topicStats = 'done' THEN 1 END) AS done,
-            COUNT(CASE WHEN us.topicStats = 'learning' THEN 1 END) AS learning,
-            COUNT(CASE WHEN us.topicStats = 'skipped' THEN 1 END) AS skipped,
-            ANY_VALUE(r.pointNum) AS total,
-            MAX(DATE(us.updatedAt)) AS updatedAt
+            us.resource_title AS title,
+            us.resource_id AS id,
+            COUNT(CASE WHEN us.topic_stats = 'done' THEN 1 END) AS done,
+            COUNT(CASE WHEN us.topic_stats = 'learning' THEN 1 END) AS learning,
+            COUNT(CASE WHEN us.topic_stats = 'skipped' THEN 1 END) AS skipped,
+            ANY_VALUE(r.point_num) AS total,
+            MAX(DATE(us.updated_at)) AS updatedAt
         FROM
             user_stats AS us
                 JOIN
-            roadmap AS r ON us.roadmapId = r.resourceId
+            roadmap AS r ON us.resource_id = r.resource_id
         WHERE
-            us.userId = #{userID}
+            us.resource_type = 'roadmap' AND us.user_id = #{userID}
         GROUP BY
-            us.roadmapTitle, us.roadmapId;
+            us.resource_title, us.resource_id;
     </select>
 
 <!--  查询用户活动行为  -->
     <select id="getUserActivityByUserId" parameterType="Integer" resultType="com.roam.sys.model.UserActivityStream">
         SELECT
-            ROW_NUMBER() OVER (ORDER BY MAX(DATE(createdAt)), resourceId, status) AS activityId,
-            MAX(resourceType) AS resourceType,
-            resourceId AS resourceId,
-            MAX(resourceTitle) AS resourceTitle,
+            ROW_NUMBER() OVER (ORDER BY MAX(DATE(created_at)), resource_id, status) AS activityId,
+            MAX(resource_type) AS resourceType,
+            resource_id AS resourceId,
+            MAX(resource_title) AS resourceTitle,
             status,
---             GROUP_CONCAT(DISTINCT CONCAT("`", topicTitle, "`") SEPARATOR ", ") AS topics,
-            GROUP_CONCAT(DISTINCT topicTitle SEPARATOR ", ") AS topics,
-            MAX(DATE(createdAt)) AS updatedAt
+            GROUP_CONCAT(DISTINCT topic_title SEPARATOR ", ") AS topics,
+            MAX(DATE(created_at)) AS updatedAt
         FROM
             user_activity
         WHERE
-            userId = #{userId}
+            user_id = #{userId}
         GROUP BY
-            resourceId, status, DATE(createdAt)
+            resource_id, status, DATE(created_at)
         ORDER BY
             updatedAt, resourceId, status;
     </select>

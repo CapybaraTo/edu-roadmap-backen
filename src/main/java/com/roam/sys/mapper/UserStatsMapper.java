@@ -1,12 +1,10 @@
 package com.roam.sys.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.roam.sys.entity.User;
+import com.roam.sys.entity.UserProgressRequest;
 import com.roam.sys.entity.UserStats;
-import com.roam.sys.model.UserActivityStream;
-import com.roam.sys.model.UserDashBoard;
-import com.roam.sys.model.UserRoadmapStats;
-import com.roam.sys.model.UserStreak;
+
+import java.util.List;
 
 /**
  * <p>
@@ -17,6 +15,13 @@ import com.roam.sys.model.UserStreak;
  * @since 2024-10-09
  */
 public interface UserStatsMapper extends BaseMapper<UserStats> {
+//    public UserStreak getUserStreakByUserId(Integer userId);
+    public List<String> getUserDoneResourceList(UserProgressRequest userProgressReq);
+
+    public List<String> getUserLearningResourceList(UserProgressRequest userProgressReq);
+
+    public List<String> getUserSkippedResourceList(UserProgressRequest userProgressReq);
+
 
 
 }

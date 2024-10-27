@@ -15,7 +15,7 @@ public class UserStreak implements Serializable {
     private static final long serialVersionUID=1L;
 
     @ApiModelProperty(value = "用户ID")
-    private Integer userId;
+    private String userId;
 
     @ApiModelProperty(value = "初次登录时间")
     private String firstLoginTime;

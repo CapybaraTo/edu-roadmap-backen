@@ -40,22 +40,22 @@ public class User implements Serializable {
 
     private String avatar;
 
-    private Date createdat;
+    private Date createdAt;
 
-    private Date updatedat;
+    private Date updatedAt;
 
-    public Date getUpdatedat() {
-        return updatedat;
+    public Date getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setUpdatedat( Date updatedat) {
-        this.updatedat = updatedat;
+    public void setUpdatedAt( Date updatedAt) {
+        this.updatedAt = updatedAt;
     }
-    public Date getCreatedat() {
-        return createdat;
+    public Date getCreatedAt() {
+        return createdAt;
     }
-    public void setCreatedat(Date createdat) {
-        this.createdat = createdat;
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
     public Integer getId() {
@@ -118,8 +118,8 @@ public class User implements Serializable {
             ", phone=" + phone +
             ", status=" + status +
             ", avatar=" + avatar +
-            ", createdat=" + createdat +
-            ", updatedat=" + updatedat +
+            ", createdAt=" + createdAt +
+            ", updatedAt=" + updatedAt +
         "}";
     }
 }

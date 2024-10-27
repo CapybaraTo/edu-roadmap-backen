@@ -17,11 +17,13 @@ public class UserActivity implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "id", type = IdType.AUTO)
-    private Integer activityId;
+    private Integer id;
 
-    private Integer userId;
+    private String userId;
 
     private String username;
+
+    private String resourceType;
 
     private String resourceId;
 
@@ -35,17 +37,17 @@ public class UserActivity implements Serializable {
 
     private Date createdAt;
 
-    public Integer getActivityId() {
-        return activityId;
+    public Integer getId() {
+        return id;
     }
-    public void setActivityId(Integer activityId) {
-        this.activityId = activityId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public Integer getUserId() {
+    public String getUserId() {
         return userId;
     }
-    public void setUserId(Integer userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
@@ -56,6 +58,12 @@ public class UserActivity implements Serializable {
         this.username = username;
     }
 
+    public String getResourceType() {
+        return resourceType;
+    }
+    public void setResourceType(String resourceType) {
+        this.resourceType = resourceType;
+    }
     public String getResourceId() {
         return resourceId;
     }
@@ -87,8 +95,8 @@ public class UserActivity implements Serializable {
     public String getStatus() {
         return status;
     }
-    public void setStats(String stats) {
-        this.status = stats;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public Date getCreatedAt() {
@@ -101,8 +109,8 @@ public class UserActivity implements Serializable {
 
     @Override
     public String toString() {
-        return "UserStats{" +
-                "userId=" + userId +
+        return "UserActivity{" +
+                "id=" + id +
                 ", username=" + username +
                 ", resourceId=" + resourceId +
                 ", resourceTitle=" + resourceTitle +

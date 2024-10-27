@@ -49,6 +49,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 //  注册
     @Override
     public void signup(User user){
+//        参数user是前端新接收的User对象
         String username = user.getUsername();
         String password = user.getPassword();
 //        查询是否存在已有用户名
@@ -61,7 +62,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 //        密码md5加密
         user.setPassword(passwordEncoder.encode(password));
 //        创建账号的时间
-        user.setCreatedat(new Date());
+        user.setCreatedAt(new Date());
 //        TODO用户状态
         user.setStatus(1);
         Integer rows = userMapper.insert(user);

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.roam.sys.mapper.UserStatsMapper">
+    <select id="getUserDoneResourceList" parameterType="com.roam.sys.entity.UserProgressRequest" resultType="String">
+        SELECT topic_id
+        FROM user_stats
+        WHERE user_id = #{userId}
+          AND resource_type = #{resourceType}
+          AND resource_id = #{resourceId}
+          AND topic_stats = 'done';
+    </select>
+
+    <select id="getUserLearningResourceList" parameterType="com.roam.sys.entity.UserProgressRequest" resultType="String">
+        SELECT topic_id
+        FROM user_stats
+        WHERE user_id = #{userId}
+          AND resource_type = #{resourceType}
+          AND resource_id = #{resourceId}
+          AND topic_stats = 'learning';
+
+    </select>
+
+    <select id="getUserSkippedResourceList" parameterType="com.roam.sys.entity.UserProgressRequest" resultType="String">
+        SELECT topic_id
+        FROM user_stats
+        WHERE user_id = #{userId}
+          AND resource_type = #{resourceType}
+          AND resource_id = #{resourceId}
+          AND topic_stats = 'skipped';
+    </select>
+
+</mapper>
