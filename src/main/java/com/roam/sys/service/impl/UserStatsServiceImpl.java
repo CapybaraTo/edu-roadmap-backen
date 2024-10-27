@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -148,6 +149,27 @@ public class UserStatsServiceImpl extends ServiceImpl<UserStatsMapper, UserStats
         data.put("skipped",userSkippedResourceList);
 //        data.put("isFavorite",)
         return data;
+    }
+
+    @Override
+    public Map<String, Object> getUserHeatMapData(String token){
+        User loginUser = null;
+        try {
+            loginUser = jwtUtil.parseToken(token, User.class);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        if(loginUser != null){
+            Map<String, Object> data = new HashMap<>();
+            data.put("heatActivities",userStatsMapper.getUserHeatMapDataById(loginUser.getId()));
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            String formattedDate = sdf.format(loginUser.getCreatedAt());
+            data.put("joinedAt",formattedDate);
+            return data;
+        }
+        Map<String, Object> error = new HashMap<>();
+        error.put("error","登录信息无效");
+        return error;
     }
 
 

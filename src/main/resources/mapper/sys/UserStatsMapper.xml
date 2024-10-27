@@ -29,4 +29,19 @@
           AND topic_stats = 'skipped';
     </select>
 
+<!--    joinedAt 单独传入-->
+    <select id="getUserHeatMapDataById" parameterType="Integer" resultType="com.roam.sys.model.HeatMapActivity">
+        SELECT
+            DATE(created_at) AS date,
+            COUNT(*) AS count
+        FROM
+            user_activity
+        WHERE
+            user_id = #{userId} AND status = 'done'
+        GROUP BY
+            DATE(created_at)
+        ORDER BY
+            date;
+    </select>
+
 </mapper>

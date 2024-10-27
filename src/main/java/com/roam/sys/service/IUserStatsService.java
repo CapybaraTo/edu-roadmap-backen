@@ -21,6 +21,8 @@ public interface IUserStatsService extends IService<UserStats> {
 
     Map<String, Object> getUserProgress(UserProgressRequest userProgressReq);
 
+    Map<String, Object> getUserHeatMapData(String token);
+
 
 
 }

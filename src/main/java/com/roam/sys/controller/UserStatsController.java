@@ -43,6 +43,20 @@ public class UserStatsController {
         return null;
     }
 
+    @GetMapping("/heatmap")
+    public Map<String,Object> getUserHeatMapData(HttpServletRequest request){
+//    public Map<String, Object> getUserHeatMapData(String token){
+        String token = getCookieValue(request,"__roadmapsh_jt__");
+//检查是否找到了token
+        if (token == null) {
+            Map<String, Object> error = new HashMap<>();
+            error.put("error", "token=null 登录信息无效，请重新登录");
+            return error;
+        }
+        Map<String, Object> data = userStatsService.getUserHeatMapData(token);
+        return data;
+    }
+
     @PostMapping("/update-user-progress")
     public Map<String, Object> updateOrInsertUserStats(@RequestBody UserStatsRequest request){
 //        传一个UserStatsRequest 类型数据 包括userid username resourcetype resourcetitle topicid topictitle status
