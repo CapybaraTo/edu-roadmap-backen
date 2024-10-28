@@ -37,7 +37,7 @@ public class UserProgressRequest implements Serializable {
 
     @Override
     public String toString() {
-        return "UserStatsRequest{" +
+        return "UserProgressRequest{" +
                 "userId=" + userId +
                 ", resourceType=" + resourceType +
                 ", resourceId=" + resourceId +

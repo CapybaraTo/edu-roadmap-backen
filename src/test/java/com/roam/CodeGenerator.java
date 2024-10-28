@@ -13,7 +13,7 @@ public class CodeGenerator {
         String password = "123456";
         String moduleName = "sys";
         String mapperLocation = "D:\\aGuoJ\\project\\roadmap\\roadmap-backend\\src\\main\\resources\\mapper\\" + moduleName;
-        String tables = "user, user_activity, user_stats";  // TODO表名 后面添加其他新表
+        String tables = "user, user_activity, user_stats, user_question";  // TODO表名 后面添加其他新表
         FastAutoGenerator.create(url, username, password)
                 .globalConfig(builder -> {
                     builder.author("GJJ") // 设置作者

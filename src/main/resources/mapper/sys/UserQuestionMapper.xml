@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.roam.sys.mapper.UserQuestionMapper">
+    <select id="getUserKnowQuestionList" parameterType="com.roam.sys.entity.UserQuestionRequest" resultType="String">
+        SELECT question_id
+        FROM user_question
+        WHERE user_id = #{userId}
+          AND group_id = #{groupId}
+          AND status = 'know';
+    </select>
+
+    <select id="getUserDontKnowQuestionList" parameterType="com.roam.sys.entity.UserQuestionRequest" resultType="String">
+        SELECT question_id
+        FROM user_question
+        WHERE user_id = #{userId}
+          AND group_id = #{groupId}
+          AND status = 'dontKnow';
+    </select>
+
+    <select id="getUserSkipQuestionList" parameterType="com.roam.sys.entity.UserQuestionRequest" resultType="String">
+        SELECT question_id
+        FROM user_question
+        WHERE user_id = #{userId}
+          AND group_id = #{groupId}
+          AND status = 'skip';
+    </select>
+
+
+</mapper>
