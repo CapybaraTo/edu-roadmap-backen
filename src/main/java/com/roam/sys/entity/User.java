@@ -21,7 +21,7 @@ import java.util.Date;
 @Getter
 @Setter
 @TableName("user")
-public class User implements Serializable {
+public class User implements Serializable{
 
     private static final long serialVersionUID = 1L;
 
@@ -51,6 +51,8 @@ public class User implements Serializable {
     public void setUpdatedAt( Date updatedAt) {
         this.updatedAt = updatedAt;
     }
+
+
     public Date getCreatedAt() {
         return createdAt;
     }

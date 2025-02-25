@@ -28,8 +28,8 @@ public class MySwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("神盾局特工管理系统接口文档")
-                .description("全网最简单的SpringBoot+Vue前后端分离项目实战")
+                .title("接口文档")
+                .description("")
                 .version("1.0")
                 .contact(new Contact("gjj", "https://capybarato.github.io/", "1023536640@qq.com"))
                 .build();
