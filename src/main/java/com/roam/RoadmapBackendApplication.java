@@ -9,7 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@MapperScan({"com.roam.*.mapper", "com.video.mapper"})
+@MapperScan({"com.roam.*.mapper"})
 @ComponentScan({"com.roam", "com.video"})
 public class RoadmapBackendApplication {
 
