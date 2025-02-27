@@ -6,13 +6,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@MapperScan("com.roam.*.mapper")
+@MapperScan({"com.roam.*.mapper", "com.video.mapper"})
+@ComponentScan({"com.roam", "com.video"})
 public class RoadmapBackendApplication {
 
     public static void main(String[] args) {
-
         SpringApplication.run(RoadmapBackendApplication.class, args);
     }
 
