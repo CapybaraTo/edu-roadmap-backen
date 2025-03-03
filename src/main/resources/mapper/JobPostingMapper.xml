@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.job.mapper.JobPostingMapper">
+    
+    <resultMap id="jobPostingMap" type="com.job.entity.JobPosting">
+        <id property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="company" column="company"/>
+        <result property="location" column="location"/>
+        <result property="salary" column="salary"/>
+        <result property="experience" column="experience"/>
+        <result property="education" column="education"/>
+        <result property="description" column="description"/>
+        <result property="postDate" column="post_date"/>
+        <result property="status" column="status"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+        <collection property="skills" ofType="com.job.entity.JobSkillRequirement">
+            <id property="id" column="skill_id"/>
+            <result property="jobId" column="job_id"/>
+            <result property="skillName" column="skill_name"/>
+            <result property="skillLevel" column="skill_level"/>
+            <result property="createdAt" column="skill_created_at"/>
+        </collection>
+    </resultMap>
+
+    <select id="findAll" resultMap="jobPostingMap">
+        SELECT 
+            j.*,
+            s.id as skill_id,
+            s.job_id,
+            s.skill_name,
+            s.skill_level,
+            s.created_at as skill_created_at
+        FROM job_posting j
+        LEFT JOIN job_skill_requirement s ON j.id = s.job_id
+        WHERE j.status = 'active'
+        ORDER BY j.post_date DESC
+    </select>
+
+    <select id="findByFilters" resultMap="jobPostingMap">
+        SELECT 
+            j.*,
+            s.id as skill_id,
+            s.job_id,
+            s.skill_name,
+            s.skill_level,
+            s.created_at as skill_created_at
+        FROM job_posting j
+        LEFT JOIN job_skill_requirement s ON j.id = s.job_id
+        WHERE j.status = 'active'
+        <if test="location != null and location != ''">
+            AND j.location = #{location}
+        </if>
+        <if test="salaryRange != null and salaryRange != ''">
+            AND j.salary = #{salaryRange}
+        </if>
+        <if test="experience != null and experience != ''">
+            AND j.experience = #{experience}
+        </if>
+        <if test="skillName != null and skillName != ''">
+            AND EXISTS (
+                SELECT 1 FROM job_skill_requirement s2 
+                WHERE s2.job_id = j.id 
+                AND s2.skill_name = #{skillName}
+            )
+        </if>
+        ORDER BY j.post_date DESC
+    </select>
+
+    <select id="findById" resultMap="jobPostingMap">
+        SELECT 
+            j.*,
+            s.id as skill_id,
+            s.job_id,
+            s.skill_name,
+            s.skill_level,
+            s.created_at as skill_created_at
+        FROM job_posting j
+        LEFT JOIN job_skill_requirement s ON j.id = s.job_id
+        WHERE j.id = #{id}
+    </select>
+</mapper> 
