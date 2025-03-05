@@ -121,7 +121,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring-boot.version}</version>
                 <configuration>
-                    <mainClass>com.roam.RoadmapBackendApplication</mainClass>
+                    <mainClass>com.video.VideoApplication</mainClass>
                     <skip>true</skip>
                 </configuration>
                 <executions>
